@@ -12,7 +12,7 @@ class Bandit:
         self.a = 1
         self.b = 1
 
-        self.is_clicked = True  # флаг для обработки ситуации когда реклама была показана но не кликнута
+        self.is_clicked = True
 
     def sample(self):
         return beta.rvs(self.a, self.b)
@@ -34,8 +34,9 @@ def get_ad():
     for b in bandits:
         if not b.is_clicked:
             b.update(0)
-            b.is_clicked = True
+            b.is_clicked = True # учтён, показ без клика
 
+    # выбираем какую рекламу показывать
     if banditA.sample() >= banditB.sample():
         banditA.is_clicked = False
         return jsonify({"advertisement_id": "A"})
